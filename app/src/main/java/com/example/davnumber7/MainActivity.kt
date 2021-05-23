@@ -2,28 +2,25 @@ package com.example.davnumber7
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
-    private val notes = ArrayList<Note>();
-    private val adapter = RecycleViewAdapter(getData(notes));
 
-    private fun getData(notes: ArrayList<Note>): MutableList<Note> {
-        return notes;
-    }
-
+    // Note-classit vaketebdi tavidan da mivxvdi ro ar iyo sachiro
+//    private val notes = ArrayList<Note>();
+    private val notes = mutableSetOf<String>();
+    private val adapter = RecycleViewAdapter(notes);
     private lateinit var editText: EditText;
     private lateinit var button: Button
-    private lateinit var removeButton: Button
     private lateinit var recyclerView: RecyclerView;
     private lateinit var recyclerViewAdapter: RecycleViewAdapter;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         editText = findViewById(R.id.editTextNote)
         button = findViewById(R.id.button)
@@ -38,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             if (container.isEmpty()){
                 return@setOnClickListener
             }
-            notes.add(Note(container.toString()))
+            notes.add(container.toString())
             adapter.notifyDataSetChanged()
         }
     }

@@ -7,14 +7,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecycleViewAdapter(private val list:MutableList<Note>):RecyclerView.Adapter<RecycleViewAdapter.RecycleViewHolder>(){
+class RecycleViewAdapter(private val list:MutableSet<String>):RecyclerView.Adapter<RecycleViewAdapter.RecycleViewHolder>(){
 
     class RecycleViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         private val textView = itemView.findViewById<TextView>(R.id.recTextView)
         val removeButton: ImageButton = itemView.findViewById<ImageButton>(R.id.removeButton)
-        fun bindNote(note:Note){
+        fun bindNote(note:String){
 
-            textView.text =note.text;
+            textView.text =note;
 
         }
 
@@ -28,10 +28,10 @@ class RecycleViewAdapter(private val list:MutableList<Note>):RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: RecycleViewHolder, position: Int) {
-        holder.bindNote(list[position])
+        holder.bindNote(list.elementAt(position))
         holder.removeButton.setOnClickListener{
 
-            list.removeAt(position);
+            list.remove(list.elementAt(position))
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, list.size);
         }
