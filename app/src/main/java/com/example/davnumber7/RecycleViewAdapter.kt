@@ -1,5 +1,7 @@
 package com.example.davnumber7
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 class RecycleViewAdapter(private val list:MutableSet<String>):RecyclerView.Adapter<RecycleViewAdapter.RecycleViewHolder>(){
 
     class RecycleViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+
+        val sharedPreferences1: SharedPreferences = itemView.context.getSharedPreferences("MyApp", Context.MODE_PRIVATE)
         private val textView = itemView.findViewById<TextView>(R.id.recTextView)
         val removeButton: ImageButton = itemView.findViewById<ImageButton>(R.id.removeButton)
         fun bindNote(note:String){
@@ -32,6 +36,9 @@ class RecycleViewAdapter(private val list:MutableSet<String>):RecyclerView.Adapt
         holder.removeButton.setOnClickListener{
 
             list.remove(list.elementAt(position))
+
+            holder.sharedPreferences1.edit().remove("NOTE").apply()
+            holder.sharedPreferences1.edit().putStringSet("NOTE",list).apply()
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, list.size);
         }
